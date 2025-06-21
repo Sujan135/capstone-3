@@ -1,3 +1,15 @@
+USE sys;
+
+# ---------------------------------------------------------------------- #
+# Target DBMS:           MySQL                                           #
+# Project name:          EasyShop                                        #
+# ---------------------------------------------------------------------- #
+DROP DATABASE IF EXISTS easyshop_test;
+
+CREATE DATABASE IF NOT EXISTS easyshop_test;
+
+USE easyshop_test;
+
 
 CREATE TABLE users (
                        user_id INT NOT NULL AUTO_INCREMENT,

@@ -20,12 +20,16 @@ public class DatabaseConfig
     @Autowired
     public DatabaseConfig(@Value("${datasource.url}") String url,
                           @Value("${datasource.username}") String username,
-                          @Value("${datasource.password}") String password)
+                          @Value("${datasource.password}") String password,
+                          @Value("${datasource.driver-class-name}") String driverClassName)
     {
         basicDataSource = new BasicDataSource();
         basicDataSource.setUrl(url);
         basicDataSource.setUsername(username);
         basicDataSource.setPassword(password);
+        basicDataSource.setDriverClassName(driverClassName);
+
+
     }
 
 }

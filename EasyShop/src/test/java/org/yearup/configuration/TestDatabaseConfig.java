@@ -27,17 +27,20 @@ public class TestDatabaseConfig
     private final String testDb;
     private final String username;
     private final String password;
+    private final String driverClassName;
 
     @Autowired
     public TestDatabaseConfig(@Value("${datasource.url}") String serverUrl,
                               @Value("${datasource.username}") String username,
                               @Value("${datasource.password}") String password,
-                              @Value("${datasource.testdb}") String testDb)
+                              @Value("${datasource.testdb}") String testDb,
+                              @Value("${datasource.driver-class-name}") String driverClassName)
     {
         this.serverUrl = serverUrl;
         this.testDb = testDb;
         this.username = username;
         this.password = password;
+        this.driverClassName = driverClassName;
     }
 
     @PostConstruct
@@ -74,6 +77,7 @@ public class TestDatabaseConfig
         dataSource.setUrl(String.format("%s/%s", serverUrl, testDb));
         dataSource.setUsername(username);
         dataSource.setPassword(password);
+        dataSource.setDriverClassName(driverClassName);
         dataSource.setAutoCommit(false);
         dataSource.setSuppressClose(true);
 
