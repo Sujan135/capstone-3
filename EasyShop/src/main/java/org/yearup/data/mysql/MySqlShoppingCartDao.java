@@ -23,7 +23,7 @@ public class MySqlShoppingCartDao implements ShoppingCartDao {
     @Override
     public ShoppingCart getByUserId(int userId) {
         String sql = "SELECT ci.product_id, ci.quantity, p.name, p.price, p.description " +
-                "FROM cart_items ci " +
+                "FROM shopping_cart ci " +
                 "JOIN products p ON ci.product_id = p.product_id " +
                 "WHERE ci.user_id = ?";
 
@@ -58,13 +58,14 @@ public class MySqlShoppingCartDao implements ShoppingCartDao {
             return cart;
 
         } catch (SQLException e) {
+            System.out.println(e);
             throw new RuntimeException("Error getting shopping cart for user " + userId, e);
         }
     }
 
     @Override
     public void addProduct(int userId, int productId) {
-        String sql = "INSERT INTO cart_items (user_id, product_id, quantity) VALUES (?, ?, 1) " +
+        String sql = "INSERT INTO shopping_cart (user_id, product_id, quantity) VALUES (?, ?, 1) " +
                 "ON DUPLICATE KEY UPDATE quantity = quantity + 1";
 
         try (Connection connection = dataSource.getConnection();
@@ -81,7 +82,7 @@ public class MySqlShoppingCartDao implements ShoppingCartDao {
 
     @Override
     public void updateQuantity(int userId, int productId, int quantity) {
-        String sql = "UPDATE cart_items SET quantity = ? WHERE user_id = ? AND product_id = ?";
+        String sql = "UPDATE shopping_cart SET quantity = ? WHERE user_id = ? AND product_id = ?";
 
         try (Connection connection = dataSource.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
@@ -102,7 +103,7 @@ public class MySqlShoppingCartDao implements ShoppingCartDao {
 
     @Override
     public void clearCart(int userId) {
-        String sql = "DELETE FROM cart_items WHERE user_id = ?";
+        String sql = "DELETE FROM shopping_cart WHERE user_id = ?";
 
         try (Connection connection = dataSource.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
@@ -111,6 +112,7 @@ public class MySqlShoppingCartDao implements ShoppingCartDao {
             statement.executeUpdate();
 
         } catch (SQLException e) {
+            System.out.println(e);
             throw new RuntimeException("Error clearing cart", e);
         }
     }

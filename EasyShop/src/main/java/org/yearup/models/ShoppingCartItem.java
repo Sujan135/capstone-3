@@ -59,6 +59,7 @@ public class ShoppingCartItem
     }
 
     public void setName(String name) {
+
     }
 
     public void setPrice(BigDecimal price) {

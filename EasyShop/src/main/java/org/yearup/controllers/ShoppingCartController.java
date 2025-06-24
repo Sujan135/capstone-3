@@ -51,20 +51,24 @@ public class ShoppingCartController
         }
         catch(Exception e)
         {
+            System.out.println(e);
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Oops... our bad.");
         }
     }
 
     @PostMapping("/products/{productId}")
-    public void addProductToCart(@PathVariable int productId, Principal principal) {
+    public ShoppingCart addProductToCart(@PathVariable int productId,
+                                 Principal principal) {
         try {
             String userName = principal.getName();
             User user = userDao.getByUserName(userName);
             shoppingCartDao.addProduct(user.getId(), productId);
 
+            return shoppingCartDao.getByUserId(user.getId());
         }catch (Exception e) {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Could not add products");
         }
+
     }
     // add a POST method to add a product to the cart - the url should be
     // https://localhost:8080/cart/products/15 (15 is the productId to be added
@@ -97,6 +101,7 @@ public class ShoppingCartController
             User user = userDao.getByUserName(userName);
             shoppingCartDao.clearCart(user.getId());
         }catch (Exception e) {
+            System.out.println(e);
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Could not delete products");
 
         }
