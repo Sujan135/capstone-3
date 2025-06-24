@@ -57,4 +57,16 @@ public class ShoppingCartItem
 
         return subTotal.subtract(discountAmount);
     }
+
+    public void setName(String name) {
+    }
+
+    public void setPrice(BigDecimal price) {
+    }
+
+    public void setProductId(int productId) {
+    }
+
+    public void setDescription(String description) {
+    }
 }
