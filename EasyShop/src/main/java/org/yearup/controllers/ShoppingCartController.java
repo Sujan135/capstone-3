@@ -24,7 +24,7 @@ public class ShoppingCartController
     // a shopping cart requires
     private final ShoppingCartDao shoppingCartDao;
     private final UserDao userDao;
-    private ProductDao productDao;
+    private final ProductDao productDao;
 
     @Autowired
     public ShoppingCartController(ShoppingCartDao shoppingCartDao, UserDao userDao, ProductDao productDao) {
@@ -33,15 +33,20 @@ public class ShoppingCartController
         this.productDao = productDao;
     }
 
+
+    // each method in this controller requires a Principal object as a parameter
     @GetMapping
     public ShoppingCart getCart(Principal principal)
     {
         try
         {
+            // get the currently logged in username
             String userName = principal.getName();
+            // find database user by userId
             User user = userDao.getByUserName(userName);
             int userId = user.getId();
 
+            // use the shoppingcartDao to get all items in the cart and return the cart
             return shoppingCartDao.getByUserId(userId);
         }
         catch(Exception e)
@@ -61,6 +66,9 @@ public class ShoppingCartController
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Could not add products");
         }
     }
+    // add a POST method to add a product to the cart - the url should be
+    // https://localhost:8080/cart/products/15 (15 is the productId to be added
+
 
     @PutMapping("/products/{productId}")
     public void updateCartProduct(@PathVariable int productId,
@@ -77,6 +85,11 @@ public class ShoppingCartController
         }
     }
 
+    // add a PUT method to update an existing product in the cart - the url should be
+    // https://localhost:8080/cart/products/15 (15 is the productId to be updated)
+    // the BODY should be a ShoppingCartItem - quantity is the only value that will be updated
+
+
     @DeleteMapping
     public void deleteCart(Principal principal) {
         try {
@@ -88,4 +101,7 @@ public class ShoppingCartController
 
         }
     }
+    // add a DELETE method to clear all products from the current users cart
+    // https://localhost:8080/cart
+
 }
