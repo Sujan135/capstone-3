@@ -95,11 +95,14 @@ public class ShoppingCartController
 
 
     @DeleteMapping
-    public void deleteCart(Principal principal) {
+    public ShoppingCart deleteCart(Principal principal) {
         try {
             String userName = principal.getName();
             User user = userDao.getByUserName(userName);
             shoppingCartDao.clearCart(user.getId());
+
+            return shoppingCartDao.getByUserId(user.getId());
+
         }catch (Exception e) {
             System.out.println(e);
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Could not delete products");
