@@ -10,6 +10,8 @@ import org.yearup.data.UserDao;
 import org.yearup.models.Profile;
 import org.yearup.models.User;
 
+import java.security.Principal;
+
 
 @RestController
 @RequestMapping("/profile")
@@ -25,18 +27,15 @@ public class ProfileController {
     }
 
     @GetMapping
-    public Profile getProfile(Authentication auth) {
-        UserDetails userDetails = (UserDetails) auth.getPrincipal();
-        String username = userDetails.getUsername();
-
-        User user = userDao .getByUserName(username);
+    public Profile getProfile(Principal principal) {
+        String username = principal.getName();
+        User user = userDao.getByUserName(username);
         return profileDao.getByUserId(user.getId());
     }
 
     @PutMapping
-    public void updateProfile(@RequestBody Profile profile, Authentication auth) {
-        UserDetails userDetails = (UserDetails) auth.getPrincipal();
-        String username = userDetails.getUsername();
+    public void updateProfile(@RequestBody Profile profile, Principal principal) {
+        String username = principal.getName();
         User user = userDao.getByUserName(username);
 
         profile.setUserId(user.getId());
