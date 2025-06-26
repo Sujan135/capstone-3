@@ -8,7 +8,9 @@ import org.yearup.models.ShoppingCartItem;
 
 import javax.sql.DataSource;
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Component
@@ -116,4 +118,41 @@ public class MySqlShoppingCartDao implements ShoppingCartDao {
             throw new RuntimeException("Error clearing cart", e);
         }
     }
+
+    @Override
+    public List<ShoppingCartItem> getCartItems(int userId) {
+        String sql = "SELECT ci.product_id, ci.quantity, p.name, p.description, p.price " +
+                "FROM shopping_cart ci JOIN products p ON ci.product_id = p.product_id WHERE ci.user_id = ?";
+
+        List<ShoppingCartItem> items = new ArrayList<>();
+
+        try (Connection conn = dataSource.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setInt(1, userId);
+
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    ShoppingCartItem item = new ShoppingCartItem();
+
+                    Product product = new Product();
+                    product.setProductId(rs.getInt("product_id"));
+                    product.setName(rs.getString("name"));
+                    product.setDescription(rs.getString("description"));
+                    product.setPrice(rs.getBigDecimal("price"));
+
+                    item.setProduct(product);
+                    item.setQuantity(rs.getInt("quantity"));
+
+                    items.add(item);
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException("Error fetching cart items", e);
+        }
+
+        return items;
+    }
+
+
 }
