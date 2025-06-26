@@ -18,7 +18,7 @@ public class MySqlProfileDao extends MySqlDaoBase implements ProfileDao
     @Override
     public Profile create(Profile profile)
     {
-        String sql = "INSERT INTO profiles (user_id, first_name, last_name, phone, email, address, city, state, zip) " +
+        String sql = "INSERT INTO profiles (user_id, first_name, last_name, phone, address, city, state, email, zip) " +
                 " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
         try(Connection connection = getConnection())
@@ -28,10 +28,10 @@ public class MySqlProfileDao extends MySqlDaoBase implements ProfileDao
             ps.setString(2, profile.getFirstName());
             ps.setString(3, profile.getLastName());
             ps.setString(4, profile.getPhone());
-            ps.setString(5, profile.getEmail());
-            ps.setString(6, profile.getAddress());
-            ps.setString(7, profile.getCity());
-            ps.setString(8, profile.getState());
+            ps.setString(5, profile.getAddress());
+            ps.setString(6, profile.getCity());
+            ps.setString(7, profile.getState());
+            ps.setString(8, profile.getEmail());
             ps.setString(9, profile.getZip());
 
             ps.executeUpdate();
@@ -62,10 +62,10 @@ public class MySqlProfileDao extends MySqlDaoBase implements ProfileDao
                         rs.getString("first_name"),
                         rs.getString("last_name"),
                         rs.getString("phone"),
-                        rs.getString("email"),
                         rs.getString("address"),
                         rs.getString("city"),
                         rs.getString("state"),
+                        rs.getString("email"),
                         rs.getString("zip")
                 );
             }
@@ -89,11 +89,11 @@ public class MySqlProfileDao extends MySqlDaoBase implements ProfileDao
             ps.setString(1, profile.getFirstName());
             ps.setString(2, profile.getLastName());
             ps.setString(3, profile.getPhone());
-            ps.setString(4, profile.getEmail());
-            ps.setString(5, profile.getAddress());
-            ps.setString(6, profile.getCity());
-            ps.setString(7, profile.getState());
-            ps.setString(8, profile.getZip());
+            ps.setString(4, profile.getAddress());
+            ps.setString(5, profile.getCity());
+            ps.setString(6, profile.getState());
+            ps.setString(7, profile.getZip());
+            ps.setString(8, profile.getEmail());
             ps.setInt(9, profile.getUserId());
 
             ps.executeUpdate();
