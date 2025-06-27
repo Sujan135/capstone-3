@@ -13,5 +13,4 @@ public interface ShoppingCartDao
     void updateQuantity(int userId, int productId, int quantity);
     void clearCart(int userId);
     List<ShoppingCartItem> getCartItems(int userId);
-    // add additional method signatures here
 }
