@@ -23,18 +23,18 @@ public class MySqlProfileDao extends MySqlDaoBase implements ProfileDao
 
         try(Connection connection = getConnection())
         {
-            PreparedStatement ps = connection.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
-            ps.setInt(1, profile.getUserId());
-            ps.setString(2, profile.getFirstName());
-            ps.setString(3, profile.getLastName());
-            ps.setString(4, profile.getPhone());
-            ps.setString(5, profile.getAddress());
-            ps.setString(6, profile.getCity());
-            ps.setString(7, profile.getState());
-            ps.setString(8, profile.getEmail());
-            ps.setString(9, profile.getZip());
+            PreparedStatement preparedStatement = connection.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
+            preparedStatement.setInt(1, profile.getUserId());
+            preparedStatement.setString(2, profile.getFirstName());
+            preparedStatement.setString(3, profile.getLastName());
+            preparedStatement.setString(4, profile.getPhone());
+            preparedStatement.setString(5, profile.getAddress());
+            preparedStatement.setString(6, profile.getCity());
+            preparedStatement.setString(7, profile.getState());
+            preparedStatement.setString(8, profile.getEmail());
+            preparedStatement.setString(9, profile.getZip());
 
-            ps.executeUpdate();
+            preparedStatement.executeUpdate();
 
             return profile;
         }
@@ -50,23 +50,23 @@ public class MySqlProfileDao extends MySqlDaoBase implements ProfileDao
         String sql = "SELECT * FROM profiles WHERE user_id = ?";
 
         try (Connection connection = getConnection();
-             PreparedStatement ps = connection.prepareStatement(sql))
+             PreparedStatement preparedStatement = connection.prepareStatement(sql))
         {
-            ps.setInt(1, userId);
-            ResultSet rs = ps.executeQuery();
+            preparedStatement.setInt(1, userId);
+            ResultSet resultSet = preparedStatement.executeQuery();
 
-            if (rs.next())
+            if (resultSet.next())
             {
                 return new Profile(
-                        rs.getInt("user_id"),
-                        rs.getString("first_name"),
-                        rs.getString("last_name"),
-                        rs.getString("phone"),
-                        rs.getString("address"),
-                        rs.getString("city"),
-                        rs.getString("state"),
-                        rs.getString("email"),
-                        rs.getString("zip")
+                        resultSet.getInt("user_id"),
+                        resultSet.getString("first_name"),
+                        resultSet.getString("last_name"),
+                        resultSet.getString("phone"),
+                        resultSet.getString("address"),
+                        resultSet.getString("city"),
+                        resultSet.getString("state"),
+                        resultSet.getString("email"),
+                        resultSet.getString("zip")
                 );
             }
             return null;
@@ -84,19 +84,19 @@ public class MySqlProfileDao extends MySqlDaoBase implements ProfileDao
                 "address = ?, city = ?, state = ?, zip = ? WHERE user_id = ?";
 
         try (Connection connection = getConnection();
-             PreparedStatement ps = connection.prepareStatement(sql))
+             PreparedStatement preparedStatement = connection.prepareStatement(sql))
         {
-            ps.setString(1, profile.getFirstName());
-            ps.setString(2, profile.getLastName());
-            ps.setString(3, profile.getPhone());
-            ps.setString(4, profile.getAddress());
-            ps.setString(5, profile.getCity());
-            ps.setString(6, profile.getState());
-            ps.setString(7, profile.getZip());
-            ps.setString(8, profile.getEmail());
-            ps.setInt(9, profile.getUserId());
+            preparedStatement.setString(1, profile.getFirstName());
+            preparedStatement.setString(2, profile.getLastName());
+            preparedStatement.setString(3, profile.getPhone());
+            preparedStatement.setString(4, profile.getAddress());
+            preparedStatement.setString(5, profile.getCity());
+            preparedStatement.setString(6, profile.getState());
+            preparedStatement.setString(7, profile.getZip());
+            preparedStatement.setString(8, profile.getEmail());
+            preparedStatement.setInt(9, profile.getUserId());
 
-            ps.executeUpdate();
+            preparedStatement.executeUpdate();
         }
         catch (SQLException e)
         {

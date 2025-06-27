@@ -29,12 +29,12 @@ public class MySqlUserDao extends MySqlDaoBase implements UserDao
 
         try (Connection connection = getConnection())
         {
-            PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-            ps.setString(1, newUser.getUsername());
-            ps.setString(2, hashedPassword);
-            ps.setString(3, newUser.getRole());
+            PreparedStatement preparedStatement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            preparedStatement.setString(1, newUser.getUsername());
+            preparedStatement.setString(2, hashedPassword);
+            preparedStatement.setString(3, newUser.getRole());
 
-            ps.executeUpdate();
+            preparedStatement.executeUpdate();
 
             User user = getByUserName(newUser.getUsername());
             user.setPassword("");

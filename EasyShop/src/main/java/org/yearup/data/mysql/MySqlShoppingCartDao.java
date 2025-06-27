@@ -126,23 +126,23 @@ public class MySqlShoppingCartDao implements ShoppingCartDao {
 
         List<ShoppingCartItem> items = new ArrayList<>();
 
-        try (Connection conn = dataSource.getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql)) {
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
 
-            ps.setInt(1, userId);
+            preparedStatement.setInt(1, userId);
 
-            try (ResultSet rs = ps.executeQuery()) {
-                while (rs.next()) {
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                while (resultSet.next()) {
                     ShoppingCartItem item = new ShoppingCartItem();
 
                     Product product = new Product();
-                    product.setProductId(rs.getInt("product_id"));
-                    product.setName(rs.getString("name"));
-                    product.setDescription(rs.getString("description"));
-                    product.setPrice(rs.getBigDecimal("price"));
+                    product.setProductId(resultSet.getInt("product_id"));
+                    product.setName(resultSet.getString("name"));
+                    product.setDescription(resultSet.getString("description"));
+                    product.setPrice(resultSet.getBigDecimal("price"));
 
                     item.setProduct(product);
-                    item.setQuantity(rs.getInt("quantity"));
+                    item.setQuantity(resultSet.getInt("quantity"));
 
                     items.add(item);
                 }
