@@ -2,22 +2,22 @@
 
 # YearUp E-Commerce Project
 
-This is a full-stack e-commerce application built using **Spring Boot (Java)** and **MySQL** as part of my YearUp program. It allows users to browse products, manage a shopping cart, and place orders. Admins can manage categories and products through a secured API.
+This is a full-stack e-commerce application built using **Spring Boot (Java)** and **MySQL** as part of my YearUp program. It allows users to browse products, manage a shopping cart, and place orders. Admins can manage categories and products through a secure API.
 
 ---
 
-## 🚀 Features
+## Features
 
-* 🔐 User Authentication (JWT)
-* 👤 Admin controls for managing categories/products
-* 📦 Product search with filters (category, price range, color)
-* 🛒 Persistent Shopping Cart for logged-in users
-* ✅ Checkout system (convert cart to order)
-* 📇 User Profile View/Update
+*  User Authentication (JWT)
+*  Admin controls for managing categories/products
+*  Product search with filters (category, price range, color)
+*  Persistent Shopping Cart for logged-in users
+*  Checkout system (convert cart to order)
+*  User Profile View/Update
 
 ---
 
-## 🖼️ Application Screens
+## 🖼 Application Screens
 
 > Replace these links with actual screenshots
 ![addCart Testing Image](https://github.com/Sujan135/capstone-3/blob/d286f1bff1024e55b5a4634f80630dfd4cc471c7/added-to-cart.jpg)
@@ -28,7 +28,7 @@ This is a full-stack e-commerce application built using **Spring Boot (Java)** a
 
 ---
 
-## 🔧 Technologies Used
+## Technologies Used
 
 * Java + Spring Boot
 * MySQL + JDBC
@@ -37,7 +37,7 @@ This is a full-stack e-commerce application built using **Spring Boot (Java)** a
 
 ---
 
-## 💡 Interesting Code Snippet
+## Interesting Code Snippet
 
 The `OrdersController` handles the full checkout process by converting the cart into an order and saving each item:
 
@@ -56,7 +56,7 @@ public void checkout(Principal principal) {
     order.setOrderDate(LocalDate.now());
     int orderId = orderDao.createOrder(order);
 
-    for (ShoppingCartItem item : cartItems) {
+    for (ShoppingCartItem item: cartItems) {
         OrderLineItem line = new OrderLineItem();
         line.setOrderId(orderId);
         line.setProductId(item.getProductId());
@@ -82,7 +82,7 @@ This logic ensures that if a product is already in the user's cart, its quantity
 
 ---
 
-## 🧪How to Test the API
+## How to Test the API
 
 Use Postman to test API endpoints like:
 
@@ -99,14 +99,6 @@ Use Postman to test API endpoints like:
 *  Email order confirmations
 *  Address and payment info
 *  Order history and tracking
-
----
-
-##  Git Commit Strategy
-
-* Each meaningful feature has its own commit
-* Bugs are fixed in separate commits
-* Clear and descriptive commit messages
 
 ---
 
