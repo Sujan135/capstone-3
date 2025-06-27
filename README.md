@@ -17,7 +17,7 @@ This is a full-stack e-commerce application built using **Spring Boot (Java)** a
 
 ---
 
-## 🖼 Application Screens
+## Application Screens
 
 > Replace these links with actual screenshots
 ![addCart Testing Image](https://github.com/Sujan135/capstone-3/blob/d286f1bff1024e55b5a4634f80630dfd4cc471c7/added-to-cart.jpg)
